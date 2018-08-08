@@ -80,6 +80,7 @@ trait QueryExecutor[DBType] extends StatementExecutor[DBType]{
   final private def executeQuery[T](msg: String, f: Connection => T): T = {
     val now = System.currentTimeMillis
     val con = connection()
+    con.setAutoCommit(false)
     try {
       val output = f(con)
       val later = System.currentTimeMillis
